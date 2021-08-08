@@ -1,6 +1,14 @@
-# webRTC game demo
+# webRTC_game
+
+## 技术栈
+### webRTC 
+### spine 
+
+### pixi
+### socket.io
 
 <!-- > 灵峯顶上一朵花 -->
+<br/>
 
 ## 安装
 ```bash
@@ -17,11 +25,11 @@ yarn
 npm start
 ```
 
-## Radar栗子
-```javascript
-```
-
 <br/>
 
 ## 特性
-常用组件封装,开箱即用
+1）webRTC实现音视频通信 <br />
+2) socket.io 处理信令逻辑 <br />
+3) pixi执行spine动画
+
+
