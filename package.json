@@ -8,7 +8,8 @@
   "scripts": {
     "start": "dtv s",
     "dev": "webpack-dev-server --config ./scripts/webpack.dev.config.js",
-    "build": "webpack --config  ./scripts/webpack.prod.config.js"
+    "build": "webpack --config  ./scripts/webpack.prod.config.js",
+    "server": "node server/app.js"
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",

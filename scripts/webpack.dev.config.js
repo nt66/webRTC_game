@@ -12,7 +12,7 @@ const webpackConfigDev = {
   mode: 'development',
 
   entry: {
-    app: [resolve('../design/App.tsx')],
+    app: [resolve('../client/App.tsx')],
   },
 
   output: {
@@ -31,7 +31,7 @@ const webpackConfigDev = {
   },
 
   plugins: [
-    new HtmlWebpackPlugin({template: './design/public/index.html', }),
+    new HtmlWebpackPlugin({template: './client/public/index.html', }),
     new webpack.NamedModulesPlugin(),  
     new webpack.HotModuleReplacementPlugin()
   ]
