@@ -8,6 +8,8 @@ function resolve(relatedPath) {
   return path.join(__dirname, relatedPath)
 }
 
+// console.log(resolve('../dist'))
+
 const webpackConfigDev = {
   mode: 'development',
 
@@ -20,7 +22,7 @@ const webpackConfigDev = {
     filename: 'index.js',
   },
 
-  devtool: 'cheap-module-eval-source-map',   
+  devtool: 'cheap-module-eval-source-map',  // 资源地图 
 
   devServer: {
     contentBase: resolve('../dist'), 

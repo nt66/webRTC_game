@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const nodeExternals  = require('webpack-node-externals');
 const webpackConfigBase = require('./webpack.base.config');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -15,7 +16,7 @@ const webpackConfigProd = {
   mode: 'production',
 
   entry: {
-    app: [resolve('../src/index.ts')], 
+    app: [resolve('../client/App.tsx')], 
   },
 
   output: {
@@ -43,6 +44,7 @@ const webpackConfigProd = {
   externals: [nodeExternals()],
 
   plugins:[
+    new HtmlWebpackPlugin({template: './client/public/index.html', }),
     new CleanWebpackPlugin() //每次执行都将清空一下./dist目录
   ]
 }

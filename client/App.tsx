@@ -21,4 +21,6 @@ const App = () => {
 }
 
 app.router(() => <App />);
-app.start('#root');
+app.start('#root')
+
+export default App;
