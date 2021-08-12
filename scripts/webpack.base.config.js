@@ -1,8 +1,13 @@
+const path = require('path')
+
 const webpackConfigBase = {
   //module此处为loader区域，一般文件内容解析，处理放在此处，如babel，less,postcss转换等
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: [".ts", ".tsx", ".js", ".json","less"]
+    extensions: [".ts", ".tsx", ".js", ".json","less"],
+    alias: {
+      '@':path.resolve(__dirname,'../client')
+    }
   },
   module: {
     rules: [
@@ -77,7 +82,8 @@ const webpackConfigBase = {
         ]
       }
     ]
-  }
+  },
+
 }
 
 module.exports = webpackConfigBase;

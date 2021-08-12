@@ -29,7 +29,7 @@ const webpackConfigDev = {
     hot: true,
     open: true,   
     host: 'localhost',
-    port: 8080,
+    port: 8030,
   },
 
   plugins: [
