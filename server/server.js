@@ -1,21 +1,23 @@
-import React from 'react'
 import Koa from 'koa'
-import Router from 'koa-router'
-import fs from 'fs'
-import path from 'path'
+import http from 'http'
+import Socket from 'socket.io'
 
 const app = new Koa()
-const router = new Router()
-const PORT = 9000 
-
-router.get('',async(ctx)=>{
-  ctx.body = 'hellow world!!!'
+const PORT = 5000
+const server = http.createServer(app) // 这是关键
+const io = Socket(server, {
+	cors: {
+		origin: "http://localhost:3000",
+		methods: [ "GET", "POST" ]
+	}
 })
 
-// 启动路由
-app.use(router.routes())
+io.on('connection',(socket)=>{
+   console.log('connected111:',socket.id)
+   socket.emit('me',socket.id)
+})
 
 // 端口监听 
-app.listen(PORT ,()=>{
+server.listen(PORT ,()=>{
   console.log(`app started at port: ${PORT}`)
 })
