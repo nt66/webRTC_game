@@ -13,8 +13,14 @@ const io = Socket(server, {
 })
 
 io.on('connection',(socket)=>{
-   console.log('connected111:',socket.id)
    socket.emit('me',socket.id)
+
+	 socket.on("callUser", (data) => {
+		console.log('callUser',data)
+		// io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from  })
+		io.emit("callUser", { signal: data.signalData, from: data.from  })
+		// io.to(data.to).emit("callAccepted", data.signal)
+	})
 })
 
 // 端口监听 
