@@ -1,4 +1,5 @@
 import React, { useEffect,useRef,useState } from 'react'
+import { Modal, Button } from 'antd'
 import { connect } from 'dva'
 import socket from '@/utils/socket'
 import Peer from "simple-peer"
@@ -8,10 +9,10 @@ const Cameras = () => {
   const videoMine = useRef()
   const videoOther = useRef()
   const connectionRef = useRef()
-  const [me, setMe] = useState()
-  const [stream, setStream ] = useState()
-  const [caller,setCaller] = useState()
-  const [callerSignal, setCallerSignal] = useState()
+  const [me, setMe] = useState() // 用户对象
+  const [stream, setStream ] = useState() // 音视频流
+  const [caller,setCaller] = useState() // 发起者
+  const [callerSignal, setCallerSignal] = useState() // 
 
 
   // getlocalmedia
@@ -38,7 +39,6 @@ const Cameras = () => {
 		})
 
 		peer.on("stream", (stream) => {
-      console.log('stream',stream)
       videoOther.current.srcObject = stream
 		})
 
@@ -50,16 +50,35 @@ const Cameras = () => {
 		connectionRef.current = peer
 	}
 
+  // answer
+  const answerCall =()=>{
+    const peer = new Peer({
+			initiator: false,
+			trickle: false,
+			stream: stream
+		})
+
+    peer.on('signal',(data)=>{
+      socket.emit('answerCall',{signal:data, to:caller})
+    })
+
+    peer.on('stream',(stream)=>{
+      videoOther.current.srcObject = stream      
+    })
+    peer.signal(callerSignal)
+    connectionRef.current = peer 
+  }
+
   useEffect(()=>{
     getUserMedia()
-    // 监听&获取当前用户id
+    // 当前用户id
     socket.on('me',(id)=>{
-      // console.log('my id is:',id)
       setMe(id)
       callUser(id)
     })
+
+    // 获取当前
     socket.on('callUser',(data)=>{
-      console.log('data',data)
 			setCaller(data.from)
 			setCallerSignal(data.signal)
     })

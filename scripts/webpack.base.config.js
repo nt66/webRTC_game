@@ -4,9 +4,9 @@ const webpackConfigBase = {
   //module此处为loader区域，一般文件内容解析，处理放在此处，如babel，less,postcss转换等
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: [".ts", ".tsx", ".js", ".json","less"],
+    extensions: [".ts", ".tsx", ".js", ".json", "less"],
     alias: {
-      '@':path.resolve(__dirname,'../client')
+      '@': path.resolve(__dirname, '../client')
     }
   },
   module: {
@@ -20,7 +20,9 @@ const webpackConfigBase = {
             presets: [
               '@babel/preset-react',
             ],
-	   plugins: ["@babel/plugin-transform-runtime"]
+            plugins: [
+              "@babel/plugin-transform-runtime",
+            ]
           }
         }
       },
@@ -29,24 +31,26 @@ const webpackConfigBase = {
         exclude: /node_modules/,
         use: [
           {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              '@babel/preset-env',
-              '@babel/preset-react',
-              '@babel/preset-typescript'
-            ],
-          }
-        }]
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                '@babel/preset-env',
+                '@babel/preset-react',
+                '@babel/preset-typescript'
+              ],
+              plugins:['import',{ libraryName:'antd',libraryDirectory:'es',style:true}]
+            }
+          }]
       },
       {
         test: [/\.css$/, /\.less$/],
+        exclude:[/[\\/]node_modules[\\/].*antd/],
         use: [
           'style-loader',
           {
-            loader:'css-loader',
-            options:{
-              modules:true
+            loader: 'css-loader',
+            options: {
+              modules: true
             }
           },
           {
@@ -60,7 +64,7 @@ const webpackConfigBase = {
             }
           },
           {
-            loader:'less-loader',
+            loader: 'less-loader',
             // options: {
             //   lessOptions: {
             //     strictMath: true,
