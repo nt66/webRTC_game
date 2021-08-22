@@ -39,6 +39,7 @@ const Cameras = () => {
 		})
 
 		peer.on("stream", (stream) => {
+      // console.log('stream',stream)
       videoOther.current.srcObject = stream
 		})
 
