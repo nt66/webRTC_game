@@ -21,7 +21,7 @@ const webpackConfigBase = {
               '@babel/preset-react',
             ],
             plugins: [
-              "@babel/plugin-transform-runtime",
+              ['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }],
             ]
           }
         }
@@ -33,18 +33,22 @@ const webpackConfigBase = {
           {
             loader: 'babel-loader',
             options: {
-              presets: [
-                '@babel/preset-env',
-                '@babel/preset-react',
-                '@babel/preset-typescript'
-              ],
-              plugins:['import',{ libraryName:'antd',libraryDirectory:'es',style:true}]
+              // presets: [
+              //   '@babel/preset-env',
+              //   '@babel/preset-react',
+              //   '@babel/preset-typescript'
+              // ],
+              presets: ["@babel/env", "@babel/react", '@babel/preset-typescript'],
+              plugins: [
+                ['import', { libraryName: 'antd', libraryDirectory: 'es', style: 'css' }],
+                ["@babel/plugin-proposal-class-properties"]
+              ]
             }
           }]
       },
       {
         test: [/\.css$/, /\.less$/],
-        exclude:[/[\\/]node_modules[\\/].*antd/],
+        exclude: [/[\\/]node_modules[\\/].*antd/],
         use: [
           'style-loader',
           {
@@ -65,12 +69,20 @@ const webpackConfigBase = {
           },
           {
             loader: 'less-loader',
-            // options: {
-            //   lessOptions: {
-            //     strictMath: true,
-            //   },
-            // }
           },
+        ]
+      },
+      {
+        test: [/\.css$/, /\.less$/],
+        include: [/[\\/]node_modules[\\/].*antd/],
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: false
+            }
+          }
         ]
       },
       {
@@ -79,15 +91,14 @@ const webpackConfigBase = {
           {
             loader: 'url-loader',
             options: {
-              limit: 12000,
+              // limit: 120000,
               // name: 'img/[name].[hash:8].[ext]'
             }
           }
         ]
       }
     ]
-  },
-
+  } 
 }
 
 module.exports = webpackConfigBase;
