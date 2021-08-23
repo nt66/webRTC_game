@@ -1,8 +1,8 @@
 import dva, { connect } from 'dva';
-import AttributeModel  from './attr';
+import GlobalModel  from './global';
 
 const app = dva();
 
-app.model(AttributeModel);
+app.model(GlobalModel);
 
 export default app;

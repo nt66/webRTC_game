@@ -2,34 +2,53 @@ import React, { Component, useEffect, useState } from 'react'
 import { Form, Input, Button, message } from 'antd';
 import { PhoneOutlined, CopyOutlined, CopyFilled } from '@ant-design/icons'
 import { CopyToClipboard } from "react-copy-to-clipboard"
-import { connect } from 'dva'
+import { useSelector, useDispatch } from 'dva'
 import styles from './index.less'
 const Right = () => {
-  const [ form ] = Form.useForm()
+  const [form] = Form.useForm()
   const [tabIdx, setTabIdx] = useState(0)
+  const dispatch = useDispatch()
   // const [validateFields, setFieldsValue] = form
+
+  const {
+    myName,
+    myID,
+    otherID,
+    otherName,
+  } = useSelector(({ global}) => ({
+    ...global,
+  }));
+
+
   // tab切换
   const tabTrigger = (idx: number) => {
     setTabIdx(idx);
   }
 
   // 视频发起
-  const callUser = ()=>{
+  const callUser = () => {
     form.validateFields().then((values) => {
-      console.log('values',values)
+      const { userName, userID } = values
+      dispatch({
+        type: 'global/callVideo',
+        payload: {
+          myName: userName,
+          otherID: userID,
+          calling: true,
+        }
+      })
     })
   }
 
-  // 拷贝
-  const copyID = ()=>{
-    message.info('拷贝成功!!!'); 
+  // 本机ID拷贝
+  const copyID = () => {
+    message.info('拷贝成功!!!');
   }
 
   // 内容渲染
   const tabContent = () => {
-    
     return (
-     tabIdx === 0 && <div className={styles.myId}>
+      tabIdx === 0 && <div className={styles.myId}>
         <Form
           form={form}
           layout="vertical"
@@ -43,7 +62,7 @@ const Right = () => {
           initialValues={{
             remember: true,
           }}
-          // onFinish={onFinish}
+        // onFinish={onFinish}
         >
           <Form.Item
             label="我的名字"
@@ -58,15 +77,15 @@ const Right = () => {
             <Input />
           </Form.Item>
           <div className={styles.btns}>
-            <CopyToClipboard text={'111122'} >
-              <Button type="dashed" shape="round" icon={<CopyOutlined /> } onClick={()=>copyID()}>复制我的ID</Button>
+            <CopyToClipboard text={myID} >
+              <Button type="dashed" shape="round" icon={<CopyOutlined />} onClick={() => copyID()}>复制我的ID</Button>
             </CopyToClipboard>
-            <Button 
-              type="primary" 
-              shape="round" 
+            <Button
+              type="primary"
+              shape="round"
               icon={<PhoneOutlined />}
               onClick={() => callUser()}
-              >视频发起</Button>
+            >视频发起</Button>
           </div>
         </Form>
       </div>

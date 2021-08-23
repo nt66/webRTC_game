@@ -1,6 +1,6 @@
 import React, { useEffect,useRef,useState } from 'react'
 import { Modal, Button } from 'antd'
-import { connect } from 'dva'
+import { useSelector, useDispatch } from 'dva'
 import socket from '@/utils/socket'
 import Peer from "simple-peer"
 import style from './index.less'
@@ -9,11 +9,20 @@ const Cameras = () => {
   const videoMine = useRef()
   const videoOther = useRef()
   const connectionRef = useRef()
-  const [me, setMe] = useState() // 用户对象
   const [stream, setStream ] = useState() // 音视频流
   const [caller,setCaller] = useState() // 发起者
-  const [callerSignal, setCallerSignal] = useState() // 
+  const [callerSignal, setCallerSignal] = useState()
+  const dispatch = useDispatch()
+  const {
+    myName,
+    myID,
+    otherID,
+    otherName,
+  } = useSelector(({ global}) => ({
+    ...global,
+  }));
 
+  // console.log('globa', myName,myID,otherID,otherName)
 
   // getlocalmedia
   const  getUserMedia =()=> {
@@ -31,6 +40,7 @@ const Cameras = () => {
 			trickle: false,
 			stream: stream
 		})
+
 		peer.on("signal", (data) => {
 			socket.emit("callUser", {
 				signalData: data,
@@ -72,9 +82,12 @@ const Cameras = () => {
 
   useEffect(()=>{
     getUserMedia()
-    // 当前用户id
     socket.on('me',(id)=>{
-      setMe(id)
+      // 设置用户ID
+      dispatch({
+        type: 'global/setMyID',
+        payload: id,
+      });
       callUser(id)
     })
 
