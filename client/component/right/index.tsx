@@ -27,8 +27,9 @@ const Right = () => {
 
   // 内容渲染
   const tabContent = () => {
+    
     return (
-      <div className={styles.myId}>
+     tabIdx === 0 && <div className={styles.myId}>
         <Form
           form={form}
           layout="vertical"
