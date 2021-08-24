@@ -32,4 +32,10 @@ npm start
 2) socket.io 处理信令逻辑 <br />
 3) pixi执行spine动画
 
+## 本地ip调试浏览器设置
+1） 打开 chrome://flags/#unsafely-treat-insecure-origin-as-secure
+2） 设置本地ip至框中如：http://192.168.1.11:3000
+3)  设置属性成为 Enabled
+
+
 
