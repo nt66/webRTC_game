@@ -19,7 +19,6 @@ const Right = () => {
     ...global,
   }));
 
-
   // tab切换
   const tabTrigger = (idx: number) => {
     setTabIdx(idx);
@@ -71,7 +70,7 @@ const Right = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            label="发起者ID"
+            label="对方账号ID"
             name="userID"
           >
             <Input />

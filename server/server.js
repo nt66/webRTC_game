@@ -13,13 +13,19 @@ const io = Socket(server, {
 })
 
 io.on('connection',(socket)=>{
-   socket.emit('me',socket.id)
+  socket.emit('me',socket.id)
 
-	 socket.on("callUser", (data) => {
-		console.log('callUser',data)
-		// io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from  })
-		io.emit("callUser", { signal: data.signalData, from: data.from  })
-		// io.to(data.to).emit("callAccepted", data.signal)
+	socket.on("callUser", (data) => {
+		io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name:data.name  })
+	})
+
+	socket.on("answerCall", (data) => {
+		// 回复给B
+		io.to(data.to).emit("callAccepted", data.signal)
+	})
+
+	socket.on("disconnect", () => {
+		socket.broadcast.emit("callEnded")
 	})
 })
 

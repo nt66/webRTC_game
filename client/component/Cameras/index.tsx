@@ -9,8 +9,10 @@ const Cameras = () => {
   const videoMine = useRef()
   const videoOther = useRef()
   const connectionRef = useRef()
+  const [receivingCall, setReceivingCall] = useState(false) // 有人call你了
   const [stream, setStream ] = useState() // 音视频流
   const [caller,setCaller] = useState() // 发起者
+  const [callerName, setCallerName] = useState() // 发起者名字
   const [callerSignal, setCallerSignal] = useState()
   const dispatch = useDispatch()
   const {
@@ -18,6 +20,7 @@ const Cameras = () => {
     myID,
     otherID,
     otherName,
+    calling,
   } = useSelector(({ global}) => ({
     ...global,
   }));
@@ -34,7 +37,7 @@ const Cameras = () => {
   }
 
   // peerConnection
-  const callUser = (id) => {
+  const callUser = () => {
 		const peer = new Peer({
 			initiator: true,
 			trickle: false,
@@ -43,19 +46,23 @@ const Cameras = () => {
 
 		peer.on("signal", (data) => {
 			socket.emit("callUser", {
+        userToCall: otherID,
 				signalData: data,
-				from: id,
+				from: myID,
+        name:myName,
 			})
 		})
 
 		peer.on("stream", (stream) => {
-      // console.log('stream',stream)
       videoOther.current.srcObject = stream
 		})
 
 		socket.on("callAccepted", (signal) => {
-			// setCallAccepted(true)
 			peer.signal(signal)
+      dispatch({
+        type:'global/setCalling',
+        payload: false
+      })
 		})
 
 		connectionRef.current = peer
@@ -63,6 +70,8 @@ const Cameras = () => {
 
   // answer
   const answerCall =()=>{
+    setReceivingCall(false)
+    
     const peer = new Peer({
 			initiator: false,
 			trickle: false,
@@ -74,30 +83,46 @@ const Cameras = () => {
     })
 
     peer.on('stream',(stream)=>{
-      videoOther.current.srcObject = stream      
+      videoOther.current.srcObject = stream
+      dispatch({
+        type:'global/setCalling',
+        payload: false
+      })      
     })
     peer.signal(callerSignal)
     connectionRef.current = peer 
   }
 
+  // reject
+  const rejectCall =()=>{
+    setReceivingCall(false)
+  }
+
   useEffect(()=>{
     getUserMedia()
     socket.on('me',(id)=>{
-      // 设置用户ID
+      // 设置用户的socketID
       dispatch({
         type: 'global/setMyID',
         payload: id,
       });
-      callUser(id)
+      console.log('id',id)
     })
 
     // 获取当前
     socket.on('callUser',(data)=>{
+      setReceivingCall(true)
 			setCaller(data.from)
 			setCallerSignal(data.signal)
+      setCallerName(data.name)
     })
-   
   },[])
+
+  useEffect(()=>{
+    if(calling){
+      callUser()
+    }
+  },[calling])
 
   return (
     <div className={style.camerasMain}>
@@ -107,6 +132,16 @@ const Cameras = () => {
       <div className={style.camera} style={{ marginLeft: '100px' }}>
         <video className={style.videoStudent} ref={videoOther}  autoplay="autoplay"></video>
       </div>
+      <Modal
+          title="视频邀请"
+          visible={receivingCall}
+          onOk={answerCall}
+          onCancel={rejectCall}
+          okText="确认"
+          cancelText="取消"
+        >
+          <p>{callerName} 正邀请你视频通话...是否接受?</p>
+        </Modal>
     </div>
   )
 }

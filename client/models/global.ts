@@ -24,6 +24,12 @@ const GlobalModel = {
         myID:payload
       }
     },
+    setCalling(state,{payload}){
+      return {
+        ...state,
+        calling:payload
+      }
+    }
   }
 };
 
