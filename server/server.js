@@ -5,15 +5,13 @@ import os from 'os'
 
 const nets = os.networkInterfaces()
 
-// console.log('nets',nets)
-
 const getIP = ()=>{
 	let host = 'localhost'
 		for (let i in nets) {
 			let item = nets[i]
 			for (let j in item){
 				let data = item[j]
-				if(data.family === 'IPv4' && data.address.indexOf('192.168')>=0 && data.address !== '127.0.0.1'){
+				if(data.family === 'IPv4' && (data.address.indexOf('192.168')>=0 || data.address.indexOf('10.89')>=0) && data.address !== '127.0.0.1'){
 					host = data.address
 				}
 			}
@@ -27,7 +25,7 @@ let HOSTNAME = getIP()
 const server = http.createServer(app) // 这是关键
 const io = Socket(server, {
 	cors: {
-		origin: "http://192.168.1.11:3000",
+		origin: `http://${HOSTNAME}:3000`,
 		methods: [ "GET", "POST" ]
 	}
 })

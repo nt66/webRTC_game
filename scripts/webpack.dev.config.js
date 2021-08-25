@@ -26,7 +26,6 @@ const webpackConfigDev = {
 
   devServer: {
     contentBase: resolve('../dist'), 
-   
     hot: true,
     open: true,   
     host: '0.0.0.0',
