@@ -34,7 +34,7 @@ npm start
 
 ## 本地ip调试浏览器设置
 1） 打开 chrome://flags/#unsafely-treat-insecure-origin-as-secure
-2） 设置本地ip至框中如：http://192.168.1.11:3000
+2） 设置本地ip至框中如：http://xx.xxx.xx.xx:9000
 3)  设置属性成为 Enabled
 
 
