@@ -45,6 +45,9 @@ io.on('connection',(socket)=>{
 	socket.on("disconnect", () => {
 		socket.broadcast.emit("callEnded")
 	})
+	socket.on("rejectCall",()=>{
+		socket.broadcast.emit("callReject")	
+	})
 })
 
 // 端口监听 

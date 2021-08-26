@@ -97,7 +97,7 @@ const Right = () => {
         <aside className={styles.aSd} >
           <header>
             <ol className={styles.nav}>
-              <li className={styles.navItem} onClick={() => tabTrigger(0)} >
+              <li className={styles.navItem} onClick={() => tabTrigger(0)}>
                 <span style={{ color: `${tabIdx === 0 ? 'rgb(242, 244, 245)' : 'rgb(153, 153, 153)'}` }}>连接</span>
                 <span className={tabIdx === 0 ? styles.navUnderline : ''}></span>
               </li>

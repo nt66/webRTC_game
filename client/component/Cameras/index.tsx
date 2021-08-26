@@ -1,5 +1,5 @@
 import React, { useEffect,useRef,useState } from 'react'
-import { Modal, Button } from 'antd'
+import { Modal, Button,message } from 'antd'
 import { useSelector, useDispatch } from 'dva'
 import socket from '@/utils/socket'
 import Peer from "simple-peer"
@@ -64,7 +64,13 @@ const Cameras = () => {
         payload: false
       })
 		})
-
+    socket.on('callReject',()=>{
+      message.info('对方已拒绝!!!');
+      dispatch({
+        type:'global/setCalling',
+        payload: false
+      })  
+    })
 		connectionRef.current = peer
 	}
 
@@ -89,6 +95,12 @@ const Cameras = () => {
         payload: false
       })      
     })
+    socket.on('callReject',()=>{
+      dispatch({
+        type:'global/setCalling',
+        payload: false
+      })  
+    })
     peer.signal(callerSignal)
     connectionRef.current = peer 
   }
@@ -96,6 +108,11 @@ const Cameras = () => {
   // reject
   const rejectCall =()=>{
     setReceivingCall(false)
+    socket.emit('rejectCall')
+    // dispatch({
+    //   type:'global/setCalling',
+    //   payload: false
+    // })     
   }
 
   useEffect(()=>{
@@ -109,7 +126,6 @@ const Cameras = () => {
       console.log('id',id)
     })
 
-    // 获取当前
     socket.on('callUser',(data)=>{
       setReceivingCall(true)
 			setCaller(data.from)
