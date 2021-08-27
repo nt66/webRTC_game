@@ -25,8 +25,6 @@ const Cameras = () => {
     ...global,
   }));
 
-  // console.log('globa', myName,myID,otherID,otherName)
-
   // getlocalmedia
   const  getUserMedia =()=> {
     let mineVideo = videoMine.current
