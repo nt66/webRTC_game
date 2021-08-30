@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Spin } from 'antd'
 import { useSelector, useDispatch } from 'dva'
-import { Left, Top, Right, Screen, Cameras } from './component'
+import { Left, Top, Right, Screen, Cameras,Viewer } from './component'
 import app from './models/index'
 import styles from './App.less'
 
@@ -20,7 +20,9 @@ const App = () => {
         <div className={styles.mainContent}>
           <Left />
           <div className={styles.screen}>
-            <Screen />
+            <Screen>
+                <Viewer />
+            </Screen>
             <Cameras />
           </div>
           <Right />
