@@ -143,7 +143,7 @@ const Cameras = () => {
       <div className={style.camera}> 
         <video className={style.videoMine} ref={videoMine}  autoplay="autoplay"></video>
       </div>
-      <div className={style.camera} style={{ marginLeft: '100px' }}>
+      <div className={style.camera} style={{ marginLeft: '150px' }}>
         <video className={style.videoStudent} ref={videoOther}  autoplay="autoplay"></video>
       </div>
       <Modal

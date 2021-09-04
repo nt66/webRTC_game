@@ -8,7 +8,7 @@ const Viewer = () => {
   return (
     <div className={styles.viewer}>
       <div>
-        <img src={imgUrl} alt="" />
+        <img src={imgUrl} alt="img" />
       </div>
     </div>
   )
