@@ -1,6 +1,6 @@
-import React,{ Component } from 'react';
-import icon from '../../assets/game.png';
-import styles from './index.less';
+import React,{ Component } from 'react'
+import icon from '../../assets/game.png'
+import styles from './index.less'
 
 const Top = () =>{
   return (
