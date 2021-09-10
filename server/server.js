@@ -45,8 +45,13 @@ io.on('connection',(socket)=>{
 	socket.on("disconnect", () => {
 		socket.broadcast.emit("callEnded")
 	})
+
 	socket.on("rejectCall",()=>{
 		socket.broadcast.emit("callReject")	
+	})
+	socket.on('flipOver',(data)=>{ // type 往前|往后 
+		// socket.broadcast.emit('playppt',data.type, data.idx)
+		io.emit('playppt',data)
 	})
 })
 

@@ -115,13 +115,13 @@ const Cameras = () => {
 
   useEffect(()=>{
     getUserMedia()
-    socket.on('me',(id)=>{
+    socket.on('me',(id:string)=>{
       // 设置用户的socketID
       dispatch({
         type: 'global/setMyID',
         payload: id,
       });
-      console.log('id',id)
+      // console.log('id',id)
     })
 
     socket.on('callUser',(data)=>{
