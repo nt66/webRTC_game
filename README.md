@@ -1,41 +1,48 @@
-# webRTC_game
+<!--灵峯顶上一朵花 -->
+# webRTC_ppt
 
-## 技术栈
-### webRTC 
-### spine 
+### 技术栈
+- react
+- node
+- webRTC
+- socket.io
 
-### pixi
-### socket.io
+----
 
-<!-- > 灵峯顶上一朵花 -->
-<br/>
+### 主要框架
+- koa
+- react
+- dva
+- antd
+- socket.io
+- socket.io-client
+- simple-peer
+----
 
-## 安装
+### 安装
 ```bash
 npm install
-```
-or
-```bash
+或者
 yarn
 ```
 
-
-## 运行
+### 运行
 ```bash
-npm start
+yarn dev
 ```
+----
 
-<br/>
+### 特性
+1. *webRTC* 实现音视频通信
+2. *socket.io* 处理信令逻辑 
+3. pixi执行spine动画
 
-## 特性
-1）webRTC实现音视频通信 <br />
-2) socket.io 处理信令逻辑 <br />
-3) pixi执行spine动画
+----
 
-## 本地ip调试浏览器设置
-1） 打开 chrome://flags/#unsafely-treat-insecure-origin-as-secure
-2） 设置本地ip至框中如：http://xx.xxx.xx.xx:3000
-3)  设置属性成为 Enabled
+### 本地ip调试浏览器设置
+1. 打开 chrome://flags/#unsafely-treat-insecure-origin-as-secur
+2. 设置本地ip至框中如：http://192.168.1.199:3000
+3. 设置属性成为 Enabled
 
 
 

@@ -4,6 +4,8 @@ import Socket from 'socket.io'
 import os from 'os'
 
 const nets = os.networkInterfaces()
+const app = new Koa()
+const PORT = 5000
 
 const getIP = ()=>{
 	let host = 'localhost'
@@ -18,10 +20,7 @@ const getIP = ()=>{
 	}
 	return host
 }
-
-const app = new Koa()
-const PORT = 5000
-let HOSTNAME = getIP()
+const HOSTNAME = getIP()
 const server = http.createServer(app) // 这是关键
 const io = Socket(server, {
 	cors: {

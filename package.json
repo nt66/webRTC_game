@@ -1,7 +1,7 @@
 {
   "author": "灵峯",
   "license": "ISC",
-  "name": "webRTC_game",
+  "name": "webRTC_ppt",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
