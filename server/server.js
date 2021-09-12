@@ -57,5 +57,5 @@ io.on('connection',(socket)=>{
 
 // 端口监听 
 server.listen(PORT ,HOSTNAME,()=>{
-  console.log(`app started at port: ${PORT}, , hostname is: ${HOSTNAME}`)
+  console.log(`app started`)
 })
