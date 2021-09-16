@@ -52,6 +52,7 @@ const Viewer = () => {
     <div className={styles.viewer}>
       <div className={styles.pptView}>
         <img src={imgUrl?.default || null} alt="img" />
+        <canvas />
       </div>
       <div className={styles.tool} >
         <Button type="primary" shape="circle" onClick={() => play('forward')} icon={<StepForwardOutlined />} style={{ marginBottom: '30px' }}  ></Button>
