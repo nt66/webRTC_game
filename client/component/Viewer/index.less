@@ -4,6 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   .tool{
     width: 50px;
     height: 100%;
@@ -11,9 +12,9 @@
     border-right: 1px solid #151515;
     display: flex;
     flex-direction: column;
-    // justify-content: center;
     align-items: center;
     padding-top: 10px;
+    align-self: flex-end;
   }
   .pptView{
     width: calc(100% - 50px);
@@ -21,6 +22,13 @@
     display: flex;
     justify-content: center;
     background-size: cover;
+  }
+  .canvas{
+    width: calc(100% - 50px);
+    height: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
   }
   // img{
     // width: 100%;
