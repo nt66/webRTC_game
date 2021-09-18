@@ -6,11 +6,12 @@ import { connect } from 'dva'
 
 import styles from './index.less'
 import lessonConfig from '@/assets/lesson/01/lessonConfig.json'
-let locationArr = [];
 const Viewer = () => {
-  const canvas2d = useRef(null)
+  const canvas2d = useRef(null) // canvas ref
   const [currentIdx, setCurrentIdx] = useState(1) // 当前胶片序号
   const [imgUrl, setImgUrl] = useState(null) // 当前胶片地址
+  const [locationArr,setLocaltionArr] = useState([]) // 路径
+  const [isDraw, setIsDraw ] = useState(false) // 是否绘图状态
 
   useEffect(() => {
     const img = require(`@/assets/lesson/01/p${currentIdx}.png`) // 动态获取胶片
@@ -23,6 +24,7 @@ const Viewer = () => {
     })
   }, [])
 
+  // 翻页边界
   const flipPage = (data: any) => {
     const { type, idx } = data
     if (idx >= 0 && idx <= Number(lessonConfig.length)) {
@@ -46,68 +48,45 @@ const Viewer = () => {
   }
 
   // 绘图
+  // 44 55  1899 1098
   const mouseEvent = (e:React.MouseEvent) => {
-    let ctx = canvas2d.current.getContext('2d');
-    e.persist();
+    let ctx = canvas2d.current.getContext('2d')
+    e.persist()
     // console.log(canvas2d.current.offsetLeft, canvas2d.current.offsetTop)
-    // console.log('eeee',e);
-    if (e.type === 'mousedown') {
-      locationArr.push([e.pageX-341,e.pageY-135]);
+    if (e.type === 'mousedown' ) {
+      setIsDraw(true)
+      console.log('e:::',e.pageX,e.pageY)
+      locationArr.push([e.pageX-41, e.pageY-52])
     }
-    if (e.type === 'mousemove') {
-      locationArr.push([e.pageX-341 , e.pageY-135]);
-      ctx.strokeStyle = 'red';
-      // ctx.lineJoin = "round";
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      locationArr.length > 1 && ctx.moveTo(locationArr[locationArr.length - 2][0], locationArr[locationArr.length - 2][1]);
-      ctx.lineTo(locationArr[locationArr.length - 1][0], locationArr[locationArr.length - 1][1]);
-      ctx.closePath();
-      ctx.stroke();  //描边
+    if (e.type === 'mousemove' && isDraw){
+      locationArr.push([e.pageX-41, e.pageY-52])
+      ctx.strokeStyle = 'red'
+      ctx.lineJoin = "round"
+      ctx.lineWidth = 4
+      ctx.beginPath()
+      ctx.moveTo(locationArr[locationArr.length-2][0], locationArr[locationArr.length-2][1])
+      ctx.lineTo(locationArr[locationArr.length - 1][0], locationArr[locationArr.length - 1][1])
+      ctx.closePath()
+      ctx.stroke()
     }
     if (e.type === 'mouseup') {
-      // console.log('locationArr',locationArr);
+      setIsDraw(false)
+      locationArr = []
     }
   }
 
   // 绘图笔触开关
   const paint = () => {
-    // let ctx = canvas2d.current.getContext('2d');
-    // console.log(Object.getPrototypeOf(ctx));
-    // (function () {
-    //     Object.getPrototypeOf(ctx).Triangle = function (x, y, r) {
-    //         this.save();
-    //         this.translate(x, y);
-    //         this.rotate(r);
-    //         this.beginPath();
-    //         this.moveTo(0, 0);
-    //         this.lineTo(10, 0);
-    //         this.lineTo(0, 10);
-    //         this.lineTo(-10, 0);
-    //         this.closePath();
-    //         this.fill();
-    //         this.restore();
-    //     }
-    //     Object.getPrototypeOf(ctx).line = function (x, y, x1, y1) {
-    //         this.save();
-    //         this.beginPath();
-    //         this.moveTo(x, y);
-    //         this.lineTo(x1, y1);
-    //         this.stroke();
-    //         this.restore();
-    //     }
-    // })();
-    // ctx.lineWidth = 5;
-    // ctx.strokeStyle = "#7C8B8C";
-    // ctx.line(0, 0, 420, 410);
-    // ctx.Triangle(420, 410, -Math.PI * .4);
+    // setIsDraw(true)
   }
 
   return (
     <div className={styles.viewer}>
       <div className={styles.pptView}>
-        {/* <img src={imgUrl?.default || null} alt="img" /> */}
+        <img src={imgUrl?.default || null} alt="img" />
         <canvas
+          width="1855"
+          height="1043"
           className={styles.canvas}
           ref={canvas2d}
           onMouseDown={mouseEvent}
@@ -116,7 +95,7 @@ const Viewer = () => {
         />
       </div>
       <div className={styles.tool} >
-        <Button type="primary" shape="circle" onClick={() => play('forward')} icon={<StepForwardOutlined />} style={{ marginBottom: '30px' }}  ></Button>
+        <Button type="primary" shape="circle" onClick={() => play('forward')} icon={<StepForwardOutlined />} style={{ marginBottom: '30px' }} ></Button>
         <Button type="primary" shape="circle" onClick={() => play('back')} icon={<StepBackwardOutlined />} style={{ marginBottom: '30px' }} ></Button>
         <Button type="primary" shape="circle" onClick={paint} icon={<EditOutlined />} style={{ marginBottom: '30px' }} ></Button>
       </div>
